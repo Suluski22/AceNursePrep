@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
+import simLabImg from '../assets/images/hero_nursing_simulation_lab_1790858033628.jpg';
+import hospitalImg from '../assets/images/hero_nursing_hospital_clinical_1790858047265.jpg';
+import studyingImg from '../assets/images/hero_nursing_students_studying_1790858065699.jpg';
+
 interface HeroCarouselProps {
   onNavigate: (path: string) => void;
 }
 
 const HERO_IMAGES = [
   {
-    url: '/src/assets/images/hero_nursing_simulation_lab_1790858033628.jpg',
+    url: simLabImg || '/images/hero_nursing_simulation_lab.jpg',
+    fallback: '/images/hero_nursing_simulation_lab.jpg',
     alt: 'Nursing students in clinical simulation training lab'
   },
   {
-    url: '/src/assets/images/hero_nursing_hospital_clinical_1790858047265.jpg',
+    url: hospitalImg || '/images/hero_nursing_hospital_clinical.jpg',
+    fallback: '/images/hero_nursing_hospital_clinical.jpg',
     alt: 'Registered nurse reviewing medical charts in hospital corridor'
   },
   {
-    url: '/src/assets/images/hero_nursing_students_studying_1790858065699.jpg',
+    url: studyingImg || '/images/hero_nursing_students_studying.jpg',
+    fallback: '/images/hero_nursing_students_studying.jpg',
     alt: 'Dedicated nursing students collaborating with clinical textbooks'
   }
 ];
@@ -40,12 +47,12 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onNavigate }) => {
 
   return (
     <section className="relative min-h-[660px] lg:min-h-[740px] flex items-center justify-center overflow-hidden bg-[#0B0E2A] pb-16 pt-10">
-      {/* Background Image Carousel with Crisp Visibility (Transparent Overlay Fix) */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image Carousel with Crisp Visibility & Bundled Asset Fallbacks */}
+      <div className="absolute inset-0 z-0 bg-[#0B0E2A]">
         {HERO_IMAGES.map((img, idx) => (
           <div
             key={idx}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out bg-[#0B0E2A] overflow-hidden ${
               idx === currentIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
             } transform transition-transform duration-[7000ms]`}
           >
@@ -54,14 +61,20 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onNavigate }) => {
               alt={img.alt}
               referrerPolicy="no-referrer"
               className="h-full w-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes(img.fallback)) {
+                  target.src = img.fallback;
+                }
+              }}
             />
           </div>
         ))}
 
         {/* Lightweight Transparent Overlay (Max 35% dark so photos remain vibrant, crisp and clear) */}
-        <div className="absolute inset-0 bg-black/35 backdrop-brightness-95"></div>
+        <div className="absolute inset-0 bg-black/35 backdrop-brightness-95 pointer-events-none"></div>
         {/* Subtle bottom gradient to blend gently into the dark navy canvas without obscuring the background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0E2A]/20 to-[#0B0E2A]/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0E2A]/20 to-[#0B0E2A]/90 pointer-events-none"></div>
       </div>
 
       {/* Manual Carousel Controls (Quiet affordances on side) */}
