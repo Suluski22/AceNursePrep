@@ -37,7 +37,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
   // Per-category completed question progress
   const [trialProgress, setTrialProgress] = useState<Record<string, number>>(() => {
     try {
-      const saved = localStorage.getItem('acenurse_trial_progress');
+      const saved = localStorage.getItem('proctorednurse_trial_progress') || localStorage.getItem('acenurse_trial_progress');
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
@@ -63,7 +63,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
   const [showPaywall, setShowPaywall] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('acenurse_trial_progress', JSON.stringify(trialProgress));
+    localStorage.setItem('proctorednurse_trial_progress', JSON.stringify(trialProgress));
   }, [trialProgress]);
 
   // Categories metadata

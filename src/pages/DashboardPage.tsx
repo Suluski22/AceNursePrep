@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../supabaseClient';
 import { EXAM_BANKS, STUDY_GUIDES } from '../data/mockData';
 import { 
   LayoutDashboard, 
@@ -25,11 +26,14 @@ import {
   Menu, 
   X,
   FileText,
-  AlertCircle
+  AlertCircle,
+  Lock,
+  KeyRound
 } from 'lucide-react';
 
 interface DashboardPageProps {
   onNavigate: (path: string) => void;
+  initialTab?: DashboardTab;
 }
 
 type DashboardTab = 
@@ -44,11 +48,59 @@ type DashboardTab =
   | 'help-center' 
   | 'settings';
 
-export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
+export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, initialTab }) => {
   const { user, purchases, downloads, logout, openCheckout, generateSignedDownloadUrl } = useAuth();
-  const [activeTab, setActiveTab] = useState<DashboardTab>('dashboard');
+  const [activeTab, setActiveTab] = useState<DashboardTab>(() => {
+    if (typeof window !== 'undefined' && window.location.pathname.includes('/settings')) {
+      return 'settings';
+    }
+    return initialTab || 'dashboard';
+  });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Security & Password Update State (Settings Tab)
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError(null);
+    setPasswordSuccess(null);
+
+    if (newPassword.length < 6) {
+      setPasswordError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError('Passwords do not match. Please ensure both fields match.');
+      return;
+    }
+
+    setIsUpdatingPassword(true);
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) {
+        setPasswordError(error.message);
+      } else {
+        setPasswordSuccess('Your password has been successfully updated!');
+        setNewPassword('');
+        setConfirmPassword('');
+      }
+    } catch (err: any) {
+      setPasswordError(err?.message || 'Failed to update password. Please try again.');
+    } finally {
+      setIsUpdatingPassword(false);
+    }
+  };
 
   // Calculate active trial or access status
   const isTrialActive = user?.trialActive;
@@ -65,7 +117,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
   const handleDownloadGuide = (guideId: string, guideTitle: string) => {
     const { url } = generateSignedDownloadUrl(guideId);
-    const content = `AceNurse Prep - Official High-Yield Study Guide\nTitle: ${guideTitle}\nAuthorized to: ${user?.fullName || 'Student Nurse'}\nCloud Storage Token: ${btoa(url)}`;
+    const content = `ProctoredNurseExams - Official High-Yield Study Guide\nTitle: ${guideTitle}\nAuthorized to: ${user?.fullName || 'Student Nurse'}\nCloud Storage Token: ${btoa(url)}`;
     const blob = new Blob([content], { type: 'application/pdf' });
     const blobUrl = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -627,7 +679,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                   <span className="text-slate-400">1 hour ago</span>
                 </div>
                 <p className="text-xs text-slate-300">
-                  "Does anyone have advice for memorizing the VEAL CHOP fetal deceleration triggers? The AceNurse maternity guide broke it down super simply!"
+                  "Does anyone have advice for memorizing the VEAL CHOP fetal deceleration triggers? The ProctoredNurseExams maternity guide broke it down super simply!"
                 </p>
               </div>
             </div>
@@ -637,18 +689,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         {/* 9. Help Center Tab */}
         {activeTab === 'help-center' && (
           <div className="space-y-6 animate-in fade-in">
-            <h2 className="text-2xl font-bold text-white">AceNurse Educator Support</h2>
+            <h2 className="text-2xl font-bold text-white">ProctoredNurseExams Educator Support</h2>
             <div className="p-6 rounded-2xl bg-[#131738] border border-slate-700/60 space-y-4">
               <h3 className="text-base font-bold text-white">Need Clinical Question Tutoring?</h3>
               <p className="text-xs text-slate-300">
                 Our faculty of MSN and DNP nurse educators are on standby. Reach out via email or start a chat with our admissions team.
               </p>
               <div className="flex items-center gap-4 text-xs">
-                <a href="mailto:support@acenurseprep.com" className="text-[#FFD60A] font-bold hover:underline">
-                  support@acenurseprep.com
+                <a href="mailto:support@proctorednurseexams.com" className="text-[#FFD60A] font-bold hover:underline">
+                  support@proctorednurseexams.com
                 </a>
                 <span>·</span>
-                <span className="text-slate-400">+1 (800) 419-PREP</span>
+                <span className="text-slate-400">📞 +1 (305) 334-7148</span>
               </div>
             </div>
           </div>
@@ -658,7 +710,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         {activeTab === 'settings' && (
           <div className="space-y-6 animate-in fade-in max-w-xl">
             <h2 className="text-2xl font-bold text-white">Account Settings</h2>
+            
+            {/* Account Info Card */}
             <div className="p-6 rounded-2xl bg-[#131738] border border-slate-700/60 space-y-4 text-xs">
+              <h3 className="text-sm font-bold text-white mb-2">Student Profile</h3>
               <div>
                 <label className="text-slate-400 block mb-1">Full Name</label>
                 <input
@@ -696,6 +751,73 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                 />
               </div>
             </div>
+
+            {/* Security & Password Card */}
+            <div className="p-6 rounded-2xl bg-[#131738] border border-slate-700/60 space-y-4 text-xs">
+              <div className="flex items-center gap-2 mb-1">
+                <Lock className="h-4 w-4 text-[#FFD60A]" />
+                <h3 className="text-sm font-bold text-white">Security &amp; Password</h3>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Update your account password below. Changes will immediately sync to your secure Supabase credentials.
+              </p>
+
+              {passwordSuccess && (
+                <div className="p-3.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 flex items-start gap-2.5 text-xs text-emerald-200">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>{passwordSuccess}</span>
+                </div>
+              )}
+
+              {passwordError && (
+                <div className="p-3.5 rounded-xl bg-red-950/80 border border-red-500/50 flex items-start gap-2.5 text-xs text-red-200">
+                  <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+                  <span>{passwordError}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleUpdatePassword} className="space-y-4 pt-1">
+                <div>
+                  <label className="text-slate-300 block mb-1 font-medium">New Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter new password (min. 6 characters)"
+                    className="w-full p-3 rounded-xl bg-[#0B0E2A] border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-[#FFD60A] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 block mb-1 font-medium">Confirm New Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Re-enter new password"
+                    className="w-full p-3 rounded-xl bg-[#0B0E2A] border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-[#FFD60A] transition-colors"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isUpdatingPassword}
+                  className="py-2.5 px-5 rounded-xl bg-[#FFD60A] hover:bg-[#ffe033] text-[#0B0E2A] font-bold text-xs shadow-md transition-all active:scale-[0.99] disabled:opacity-60 flex items-center justify-center gap-2"
+                >
+                  {isUpdatingPassword ? (
+                    <>
+                      <div className="h-3.5 w-3.5 border-2 border-[#0B0E2A] border-t-transparent rounded-full animate-spin" />
+                      <span>Updating...</span>
+                    </>
+                  ) : (
+                    <span>Update Password</span>
+                  )}
+                </button>
+              </form>
+            </div>
+
           </div>
         )}
 

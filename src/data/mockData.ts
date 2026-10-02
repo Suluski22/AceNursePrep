@@ -372,28 +372,28 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 
 export const TESTIMONIALS = [
   {
-    quote: "I failed my first NCLEX attempt after using generic question banks. AceNurse Prep's NGN case studies matched the exact computer testing interface I saw on test day. I passed in 85 questions! The rationales were light years ahead of anything else.",
+    quote: "I failed my first NCLEX attempt after using generic question banks. ProctoredNurseExams's NGN case studies matched the exact computer testing interface I saw on test day. I passed in 85 questions! The rationales were light years ahead of anything else.",
     name: "Brianna Jenkins, RN",
     school: "Johns Hopkins School of Nursing",
     exam: "NCLEX-RN First-Time Pass",
     avatar: "BJ"
   },
   {
-    quote: "My program required a 900 on the HESI RN Exit to graduate. I was stuck in the 780s. After 2 weeks on AceNurse Prep's HESI practice bank, I scored 1,042 on my exit exam! The one-time fee saved me hundreds of dollars compared to recurring subscription platforms.",
+    quote: "My program required a 900 on the HESI RN Exit to graduate. I was stuck in the 780s. After 2 weeks on ProctoredNurseExams's HESI practice bank, I scored 1,042 on my exit exam! The one-time fee saved me hundreds of dollars compared to recurring subscription platforms.",
     name: "Carlos Mendez, RN",
     school: "UT Health Houston School of Nursing",
     exam: "HESI RN Exit (Score: 1,042)",
     avatar: "CM"
   },
   {
-    quote: "The ATI Comprehensive Predictor had our whole cohort terrified. AceNurse Prep broke down maternal-newborn and prioritization so clearly that I achieved a 99% predicted probability of passing the NCLEX on my very first proctored attempt.",
+    quote: "The ATI Comprehensive Predictor had our whole cohort terrified. ProctoredNurseExams broke down maternal-newborn and prioritization so clearly that I achieved a 99% predicted probability of passing the NCLEX on my very first proctored attempt.",
     name: "Amanda Kowalski, BSN",
     school: "Emory University Nell Hodgson Woodruff School of Nursing",
     exam: "ATI RN Comprehensive Predictor (99% Probability)",
     avatar: "AK"
   },
   {
-    quote: "I needed a minimum 82% on the ATI TEAS to get into my dream BSN program in Canada. AceNurse Prep helped me score an 89.4% overall, including a 94% on the Science section. Could not have done it without the high-yield summaries.",
+    quote: "I needed a minimum 82% on the ATI TEAS to get into my dream BSN program in Canada. ProctoredNurseExams helped me score an 89.4% overall, including a 94% on the Science section. Could not have done it without the high-yield summaries.",
     name: "Devon Sinclair",
     school: "University of Toronto Lawrence S. Bloomberg Faculty of Nursing",
     exam: "ATI TEAS Version 7 (Score: 89.4%)",
@@ -404,7 +404,7 @@ export const TESTIMONIALS = [
 export const FAQS = [
   {
     question: "Is this a recurring subscription or a one-time purchase?",
-    answer: "AceNurse Prep is strictly a 100% one-time purchase. There are zero recurring monthly charges, zero auto-renewals, and no hidden membership fees. When you purchase the Basic Test Bank ($49), you get 90 days of unrestricted access. When you purchase the Complete Pass Bundle ($89), you receive lifetime access with unlimited future question updates."
+    answer: "ProctoredNurseExams is strictly a 100% one-time purchase. There are zero recurring monthly charges, zero auto-renewals, and no hidden membership fees. When you purchase the Basic Test Bank ($49), you get 90 days of unrestricted access. When you purchase the Complete Pass Bundle ($89), you receive lifetime access with unlimited future question updates."
   },
   {
     question: "How does the 7-Day Free Trial work?",
@@ -420,7 +420,7 @@ export const FAQS = [
   },
   {
     question: "Can I access the test bank on mobile devices and tablets?",
-    answer: "Absolutely. AceNurse Prep is built with a responsive, mobile-first web interface. Your study progress, question answers, bookmarks, and quiz stats sync in real-time across your iPhone, Android smartphone, iPad/tablet, and Mac or Windows desktop."
+    answer: "Absolutely. ProctoredNurseExams is built with a responsive, mobile-first web interface. Your study progress, question answers, bookmarks, and quiz stats sync in real-time across your iPhone, Android smartphone, iPad/tablet, and Mac or Windows desktop."
   },
   {
     question: "How do the Pay-to-Download Study Guides work?",

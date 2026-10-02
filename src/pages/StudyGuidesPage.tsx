@@ -40,7 +40,7 @@ export const StudyGuidesPage: React.FC<StudyGuidesPageProps> = ({ onNavigate }) 
   const handleDownloadPurchased = (guide: StudyGuide) => {
     // Generate fresh signed URL token
     const { url, expiresAt } = generateSignedDownloadUrl(guide.id);
-    const content = `AceNurse Prep - Official High-Yield Clinical Study Guide\nTitle: ${guide.title}\nFormat: High-Resolution Clinical PDF\nPage Count: ${guide.pageCount}\nAuthorized Licensee: Registered Student Nurse\nSecurity Token: ${btoa(url)}\n\nExcerpt:\n${guide.sampleExcerpt}\n\nTopics Covered:\n${guide.previewTopics.join('\n')}`;
+    const content = `ProctoredNurseExams - Official High-Yield Clinical Study Guide\nTitle: ${guide.title}\nFormat: High-Resolution Clinical PDF\nPage Count: ${guide.pageCount}\nAuthorized Licensee: Registered Student Nurse\nSecurity Token: ${btoa(url)}\n\nExcerpt:\n${guide.sampleExcerpt}\n\nTopics Covered:\n${guide.previewTopics.join('\n')}`;
     const blob = new Blob([content], { type: 'application/pdf' });
     const blobUrl = URL.createObjectURL(blob);
     const link = document.createElement('a');

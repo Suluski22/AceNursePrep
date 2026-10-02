@@ -81,9 +81,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     let isMounted = true;
 
     try {
-      const savedUser = localStorage.getItem('acenurse_user');
-      const savedPurchases = localStorage.getItem('acenurse_purchases');
-      const savedDownloads = localStorage.getItem('acenurse_downloads');
+      const savedUser = localStorage.getItem('proctorednurse_user') || localStorage.getItem('acenurse_user');
+      const savedPurchases = localStorage.getItem('proctorednurse_purchases') || localStorage.getItem('acenurse_purchases');
+      const savedDownloads = localStorage.getItem('proctorednurse_downloads') || localStorage.getItem('acenurse_downloads');
 
       if (savedUser) {
         setUser(JSON.parse(savedUser));
@@ -179,18 +179,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Save changes to localStorage
   useEffect(() => {
     if (user) {
-      localStorage.setItem('acenurse_user', JSON.stringify(user));
+      localStorage.setItem('proctorednurse_user', JSON.stringify(user));
     } else {
+      localStorage.removeItem('proctorednurse_user');
       localStorage.removeItem('acenurse_user');
     }
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem('acenurse_purchases', JSON.stringify(purchases));
+    localStorage.setItem('proctorednurse_purchases', JSON.stringify(purchases));
   }, [purchases]);
 
   useEffect(() => {
-    localStorage.setItem('acenurse_downloads', JSON.stringify(downloads));
+    localStorage.setItem('proctorednurse_downloads', JSON.stringify(downloads));
   }, [downloads]);
 
   const openCheckout = (item: CheckoutItem) => {

@@ -93,7 +93,7 @@ export const CheckoutModal: React.FC = () => {
   // Helper to trigger instant download simulation
   const handleDownloadPDF = () => {
     // Generate sample PDF blob
-    const content = `AceNurse Prep - Official High-Yield Clinical Study Guide\nTitle: ${activeCheckoutItem.title}\nAuthorized Licensee: ${cardholderName || user?.fullName || 'Registered Student'}\nSecurity Token ID: ${successData?.purchaseId}\n\nContents:\n1. Next-Gen Clinical Judgment Measurement Model (CJMM)\n2. High-Yield Pharmacology & Antidotes Matrix\n3. Pediatric & Maternal-Newborn Vital Benchmarks\n4. Saunders/HESI 900+ Scoring Conversions\n5. Practice Vignettes and Diagnostic Rationales`;
+    const content = `ProctoredNurseExams - Official High-Yield Clinical Study Guide\nTitle: ${activeCheckoutItem.title}\nAuthorized Licensee: ${cardholderName || user?.fullName || 'Registered Student'}\nSecurity Token ID: ${successData?.purchaseId}\n\nContents:\n1. Next-Gen Clinical Judgment Measurement Model (CJMM)\n2. High-Yield Pharmacology & Antidotes Matrix\n3. Pediatric & Maternal-Newborn Vital Benchmarks\n4. Saunders/HESI 900+ Scoring Conversions\n5. Practice Vignettes and Diagnostic Rationales`;
     const blob = new Blob([content], { type: 'application/pdf' });
     const blobUrl = URL.createObjectURL(blob);
     const link = document.createElement('a');

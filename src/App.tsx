@@ -18,6 +18,8 @@ import { FreeTrialPage } from './pages/FreeTrialPage';
 import { BlogPage } from './pages/BlogPage';
 import { AuthPage } from './pages/AuthPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { UpdatePasswordPage } from './pages/UpdatePasswordPage';
 
 export function AppContent() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
@@ -45,6 +47,7 @@ export function AppContent() {
 
   // Handle Supabase OAuth and email confirmation callback redirects
   useEffect(() => {
+    document.title = 'ProctoredNurseExams | Pass NCLEX, HESI & ATI Nursing Exams';
     if (currentPath.startsWith('/auth/callback')) {
       const timer = setTimeout(() => {
         navigateTo('/dashboard');
@@ -91,6 +94,15 @@ export function AppContent() {
     if (currentPath === '/register') {
       return <AuthPage initialMode="register" onNavigate={navigateTo} />;
     }
+    if (currentPath === '/forgot-password') {
+      return <ForgotPasswordPage onNavigate={navigateTo} />;
+    }
+    if (currentPath === '/update-password' || currentPath.startsWith('/update-password')) {
+      return <UpdatePasswordPage onNavigate={navigateTo} />;
+    }
+    if (currentPath === '/dashboard/settings') {
+      return <DashboardPage initialTab="settings" onNavigate={navigateTo} />;
+    }
     if (currentPath === '/dashboard') {
       return <DashboardPage onNavigate={navigateTo} />;
     }
@@ -99,7 +111,7 @@ export function AppContent() {
         <div className="flex flex-col items-center justify-center min-h-[50vh] py-16 px-4 text-center">
           <div className="h-10 w-10 border-4 border-[#FFD60A] border-t-transparent rounded-full animate-spin mb-4"></div>
           <h3 className="text-xl font-bold text-white">Verifying your student session...</h3>
-          <p className="text-xs text-slate-300 mt-2">Connecting to AceNurse Prep portal</p>
+          <p className="text-xs text-slate-300 mt-2">Connecting to ProctoredNurseExams portal</p>
         </div>
       );
     }

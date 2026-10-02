@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import { MessageSquare, X, Send, CheckCircle2, Headphones, Sparkles } from 'lucide-react';
 
 export const FloatingSupport: React.FC = () => {
-  // WhatsApp Modal State (Bottom-Left)
-  const [whatsappOpen, setWhatsappOpen] = useState(false);
-  const [whatsappMessage, setWhatsappMessage] = useState('Hello AceNurse Prep! I have a question about the NCLEX-RN Complete Pass Bundle.');
-  const [whatsappSent, setWhatsappSent] = useState(false);
-
   // Live Chat Drawer State (Bottom-Right)
   const [chatOpen, setChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState<Array<{ sender: 'agent' | 'user'; text: string; time: string }>>([
     {
       sender: 'agent',
-      text: 'Hi there! I am Nurse Sarah from AceNurse Prep. Are you studying for NCLEX, HESI, or ATI TEAS? How can I help you pass on your first try?',
+      text: 'Hi there! I am Nurse Sarah from ProctoredNurseExams. Are you studying for NCLEX, HESI, or ATI TEAS? How can I help you pass on your first try?',
       time: 'Just now'
     }
   ]);
@@ -56,24 +51,16 @@ export const FloatingSupport: React.FC = () => {
     }, 1000);
   };
 
-  const handleWhatsAppSend = (e: React.FormEvent) => {
-    e.preventDefault();
-    setWhatsappSent(true);
-    setTimeout(() => {
-      // Simulate opening WhatsApp chat or resetting
-      setWhatsappSent(false);
-      setWhatsappOpen(false);
-    }, 2000);
-  };
-
   return (
     <>
-      {/* 1. Bottom-Left: Floating Green WhatsApp Icon Button */}
+      {/* 1. Bottom-Left: Floating Green WhatsApp Action Widget Anchor Link */}
       <div className="fixed bottom-[20px] left-[20px] z-50">
-        <button
-          onClick={() => setWhatsappOpen(!whatsappOpen)}
+        <a
+          href="https://wa.me/13053347148"
+          target="_blank"
+          rel="noopener noreferrer"
           className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl hover:bg-[#20ba59] transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#25D366]/40"
-          aria-label="Contact nursing admissions on WhatsApp"
+          aria-label="Contact nursing admissions on WhatsApp (+1 305 334-7148)"
         >
           {/* Animated ping dot */}
           <span className="absolute -top-1 -right-1 flex h-4 w-4">
@@ -85,71 +72,14 @@ export const FloatingSupport: React.FC = () => {
           <svg className="h-7 w-7 fill-current" viewBox="0 0 24 24">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.886-9.888 9.886m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
           </svg>
-        </button>
-
-        {/* WhatsApp Modal Popover */}
-        {whatsappOpen && (
-          <div className="absolute bottom-16 left-0 w-80 sm:w-96 rounded-2xl bg-[#0B0E2A] border border-[#25D366]/40 shadow-2xl p-5 text-[#F4F6FC] z-50">
-            <div className="flex items-center justify-between pb-3 border-b border-[#1A1A4E]">
-              <div className="flex items-center gap-2.5">
-                <div className="h-8 w-8 rounded-full bg-[#25D366] flex items-center justify-center text-white">
-                  <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">Nursing Admissions WhatsApp</h4>
-                  <p className="text-[11px] text-emerald-400 flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-                    Direct Advisor Line
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setWhatsappOpen(false)}
-                className="text-slate-400 hover:text-white p-1 rounded-lg"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            {whatsappSent ? (
-              <div className="py-8 text-center space-y-2">
-                <CheckCircle2 className="h-10 w-10 text-[#25D366] mx-auto animate-bounce" />
-                <p className="text-sm font-semibold text-white">Message Dispatched!</p>
-                <p className="text-xs text-slate-300">An admissions counselor will connect on WhatsApp within 3 minutes.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleWhatsAppSend} className="mt-4 space-y-3">
-                <p className="text-xs text-slate-300">
-                  Chat directly with an exam prep advisor regarding test bank coverage, institutional pricing, or NGN questions.
-                </p>
-                <div>
-                  <textarea
-                    rows={3}
-                    value={whatsappMessage}
-                    onChange={(e) => setWhatsappMessage(e.target.value)}
-                    className="w-full text-xs p-3 rounded-xl bg-[#131738] border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-[#25D366]"
-                    placeholder="Type your message..."
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-colors"
-                >
-                  <Send className="h-3.5 w-3.5" />
-                  <span>Start WhatsApp Chat</span>
-                </button>
-              </form>
-            )}
-          </div>
-        )}
+        </a>
       </div>
 
-      {/* 2. Bottom-Right: Live Chat Widget ("AceNurse Prep – Replies within 3 min") */}
+      {/* 2. Bottom-Right: Live Chat Widget ("ProctoredNurseExams – Replies within 3 min") */}
       <div className="fixed bottom-[20px] right-[20px] z-50">
         {!chatOpen ? (
           <button
+            id="proctorednurse-chat-trigger"
             onClick={() => setChatOpen(true)}
             className="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#1A1A4E] hover:bg-[#242468] text-white border border-[#5D5FEF]/50 shadow-2xl transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#5D5FEF]/30"
             aria-label="Open Live Chat Support"
@@ -163,7 +93,7 @@ export const FloatingSupport: React.FC = () => {
             </div>
             <div className="text-left hidden sm:block">
               <div className="text-xs font-bold text-white flex items-center gap-1.5">
-                <span>AceNurse Prep Live Chat</span>
+                <span>ProctoredNurseExams Live Chat</span>
                 <Sparkles className="h-3 w-3 text-[#FFD60A]" />
               </div>
               <div className="text-[10px] text-emerald-300 font-medium">
@@ -181,7 +111,7 @@ export const FloatingSupport: React.FC = () => {
                   <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-[#1A1A4E]"></span>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white leading-tight">AceNurse Prep Support</h4>
+                  <h4 className="text-sm font-bold text-white leading-tight">ProctoredNurseExams Support</h4>
                   <p className="text-[11px] text-emerald-400 font-medium">Replies within 3 min · Live Educator</p>
                 </div>
               </div>

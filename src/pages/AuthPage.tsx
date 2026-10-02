@@ -9,7 +9,8 @@ import {
   Globe, 
   ArrowRight, 
   AlertCircle, 
-  Sparkles
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 
 interface AuthPageProps {
@@ -20,6 +21,11 @@ interface AuthPageProps {
 export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onNavigate }) => {
   const { login, register, loginWithGoogle } = useAuth();
   const [mode, setMode] = useState<'login' | 'register'>(initialMode);
+
+  // Check if user was redirected following a successful password reset
+  const [resetSuccess] = useState(() => {
+    return new URLSearchParams(window.location.search).get('reset') === 'true';
+  });
 
   // Form State
   const [email, setEmail] = useState('');
@@ -157,6 +163,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onNav
             </span>
           </div>
 
+          {/* Reset Success Message */}
+          {resetSuccess && (
+            <div className="p-3.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 flex items-start gap-2.5 text-xs text-emerald-200">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+              <span>Your password has been successfully reset! Please sign in with your new password.</span>
+            </div>
+          )}
+
           {/* Error Message */}
           {errorMessage && (
             <div className="p-3.5 rounded-xl bg-red-950/80 border border-red-500/50 flex items-start gap-2.5 text-xs text-red-200">
@@ -223,9 +237,20 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onNav
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
-                Password
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-medium text-slate-300">
+                  Password
+                </label>
+                {mode === 'login' && (
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('/forgot-password')}
+                    className="text-xs text-[#FFD60A] hover:underline transition-colors focus:outline-none"
+                  >
+                    Forgot Password?
+                  </button>
+                )}
+              </div>
               <div className="relative">
                 <input
                   type="password"
@@ -258,7 +283,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onNav
                     <Globe className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400 pointer-events-none" />
                   </div>
                   <p className="text-[11px] text-slate-400 mt-1">
-                    AceNurse Prep licensing is strictly compliant with US NCSBN and Canadian CRNE/NCLEX mandates.
+                    ProctoredNurseExams licensing is strictly compliant with US NCSBN and Canadian CRNE/NCLEX mandates.
                   </p>
                 </div>
 

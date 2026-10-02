@@ -109,7 +109,7 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onNavigate }) => {
 
         {/* 2. Main Headline (Restored): Large serif headline with crisp drop-shadow */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-white tracking-tight leading-[1.1] font-editorial-serif drop-shadow-[0_3px_8px_rgba(0,0,0,0.85)] max-w-3xl">
-          Pass Your <span className="text-[#FFD60A] italic underline decoration-[#FFD60A]/50 underline-offset-8">Nursing Exam</span> on the First Try.
+          Pass Your <span className="text-[#FFD60A] italic underline decoration-[#FFD60A]/50 underline-offset-8">Proctored Nursing Exam</span> on the First Try.
         </h1>
 
         {/* 3. Sub-feature Cards: Aligned directly underneath the main headline with clean spacing */}
