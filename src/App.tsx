@@ -20,6 +20,7 @@ import { AuthPage } from './pages/AuthPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { UpdatePasswordPage } from './pages/UpdatePasswordPage';
+import { PracticeQuizPage } from './pages/PracticeQuizPage';
 
 export function AppContent() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
@@ -81,6 +82,9 @@ export function AppContent() {
     }
     if (currentPath === '/pricing') {
       return <PricingPage onNavigate={navigateTo} />;
+    }
+    if (currentPath === '/practice/ati-rn-comprehensive-predictor' || currentPath.startsWith('/practice')) {
+      return <PracticeQuizPage examId="ati-rn-comprehensive-predictor" onNavigate={navigateTo} />;
     }
     if (currentPath === '/free-trial' || currentPath === '/free-practice') {
       return <FreeTrialPage onNavigate={navigateTo} />;

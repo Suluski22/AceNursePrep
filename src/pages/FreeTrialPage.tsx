@@ -99,12 +99,12 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
     {
       category: 'ATI School Exams',
       title: 'ATI School Exams',
-      subtitle: 'Comprehensive Predictor & Specialty Set',
+      subtitle: 'ATI RN Comprehensive Predictor (Full Access Unlocked)',
       icon: <FileCheck className="h-6 w-6 text-[#5D5FEF]" />,
       bullets: [
-        '10 Targeted Proctored Assessment Questions',
-        'Maternity, Management, Pharmacology Drills',
-        'Level 3 Benchmark Rationales & Guidance'
+        'Full 2,400 Question Bank (No Paywall Gate)',
+        'Next-Gen (NGN) Case Studies & SATA Items',
+        'Level 3 Benchmark Cut-Score Rationales'
       ]
     },
     {
@@ -130,12 +130,13 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
 
     setSelectedCategory(cat);
     const answeredCount = trialProgress[cat] || 0;
+    const isUnlockedCat = cat === 'ATI School Exams';
 
-    if (answeredCount >= 10) {
+    if (!isUnlockedCat && answeredCount >= 10) {
       setShowPaywall(true);
       setCurrentQuestionIndex(9);
     } else {
-      setCurrentQuestionIndex(answeredCount);
+      setCurrentQuestionIndex(answeredCount >= 10 ? 0 : answeredCount);
       setSelectedOptionIds([]);
       setIsSubmitted(false);
       setShowPaywall(false);
@@ -174,7 +175,8 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
       [selectedCategory]: newCount
     }));
 
-    if (currentQuestionIndex === 9) {
+    // Gated to question 10 for other categories, but unrestricted for ATI School Exams
+    if (selectedCategory !== 'ATI School Exams' && currentQuestionIndex === 9) {
       setTimeout(() => {
         setShowPaywall(true);
       }, 2500);
@@ -182,12 +184,16 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex >= 9) {
+    if (selectedCategory !== 'ATI School Exams' && currentQuestionIndex >= 9) {
       setShowPaywall(true);
       return;
     }
 
-    setCurrentQuestionIndex(prev => prev + 1);
+    if (currentQuestionIndex < currentQuestions.length - 1) {
+      setCurrentQuestionIndex(prev => prev + 1);
+    } else {
+      setCurrentQuestionIndex(0);
+    }
     setSelectedOptionIds([]);
     setIsSubmitted(false);
   };

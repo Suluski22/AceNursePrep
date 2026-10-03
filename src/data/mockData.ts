@@ -51,7 +51,7 @@ export const EXAM_BANKS: ExamBank[] = [
     targetProfession: 'PN'
   },
   {
-    id: 'ati-rn-comp-predictor',
+    id: 'ati-rn-comprehensive-predictor',
     category: 'ATI School Exams',
     title: 'ATI RN Comprehensive Predictor',
     shortDescription: 'Standardized exit predictor covering all nursing specialties with Level 1, 2, and 3 benchmark cut scores and NGN clinical items.',
@@ -59,7 +59,9 @@ export const EXAM_BANKS: ExamBank[] = [
     difficulty: 'Comprehensive',
     ngnCompatible: true,
     iconName: 'Sparkles',
-    targetProfession: 'RN'
+    targetProfession: 'RN',
+    isLocked: false,
+    isFree: true
   },
   {
     id: 'ati-rn-nursing-mgmt',

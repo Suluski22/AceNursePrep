@@ -42,15 +42,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       bankRoute: '/exam-banks?selected=hesi-rn-exit'
     },
     {
-      id: 'ati-rn-comp-predictor',
+      id: 'ati-rn-comprehensive-predictor',
       title: 'ATI School Exams',
       subtitle: 'Comprehensive Predictor',
-      tag: 'Level 3 Target',
-      qCount: '6,250+ Questions',
+      tag: '100% Free Full Access',
+      qCount: '6,250+ Questions (2,400 Free)',
       icon: <FileCheck className="h-5 w-5 text-[#FFD60A]" />,
       desc: 'Proctored school exams, nursing management, maternity & pharmacology.',
-      freeRoute: '/free-practice',
-      bankRoute: '/exam-banks?selected=ati-rn-comp-predictor'
+      freeRoute: '/practice/ati-rn-comprehensive-predictor',
+      bankRoute: '/exam-banks?selected=ati-rn-comprehensive-predictor'
     },
     {
       id: 'ati-teas',

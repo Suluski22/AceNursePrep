@@ -10,6 +10,8 @@ export interface ExamBank {
   ngnCompatible: boolean;
   iconName: string;
   targetProfession: 'RN' | 'PN' | 'Pre-Nursing';
+  isLocked?: boolean;
+  isFree?: boolean;
 }
 
 export interface QuestionOption {

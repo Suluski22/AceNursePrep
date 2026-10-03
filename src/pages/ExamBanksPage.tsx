@@ -13,7 +13,8 @@ import {
   Activity,
   CheckCircle2,
   Check,
-  ArrowDown
+  ArrowDown,
+  ArrowRight
 } from 'lucide-react';
 import { ExamCategory } from '../types';
 
@@ -133,6 +134,7 @@ export const ExamBanksPage: React.FC<ExamBanksPageProps> = ({ initialSelectedExa
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {examsInCategory.map((exam) => {
                     const isSelected = selectedExamId === exam.id;
+                    const isFullAccessPackage = exam.id === 'ati-rn-comprehensive-predictor' || exam.id === 'ati-rn-comp-predictor' || exam.isFree === true;
 
                     return (
                       <div
@@ -143,8 +145,18 @@ export const ExamBanksPage: React.FC<ExamBanksPageProps> = ({ initialSelectedExa
                             : 'border-slate-200 hover:shadow-2xl'
                         }`}
                       >
+                        {/* Full Access Unlocked Badge */}
+                        {isFullAccessPackage && (
+                          <div className="absolute -top-3 left-6 z-10">
+                            <span className="px-3 py-0.5 rounded-full bg-emerald-600 text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-md">
+                              <Sparkles className="h-3 w-3 text-[#FFD60A]" />
+                              Unlocked · Full Access
+                            </span>
+                          </div>
+                        )}
+
                         {/* Selected Indicator */}
-                        {isSelected && (
+                        {isSelected && !isFullAccessPackage && (
                           <div className="absolute -top-3 right-6">
                             <span className="px-3 py-0.5 rounded-full bg-[#FFD60A] text-[#0B0E2A] text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
                               <CheckCircle2 className="h-3 w-3" />
@@ -202,15 +214,25 @@ export const ExamBanksPage: React.FC<ExamBanksPageProps> = ({ initialSelectedExa
                           </div>
                         </div>
 
-                        {/* Purple View Package Button */}
+                        {/* Card CTA Action Button: Unlocked vs Package Selection */}
                         <div className="mt-6 pt-4 border-t border-slate-100">
-                          <button
-                            onClick={() => handleViewPackage(exam.id)}
-                            className="w-full py-3 px-4 rounded-xl bg-[#5D5FEF] hover:bg-[#4D4FD9] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98]"
-                          >
-                            <span>View Package</span>
-                            <ArrowDown className="h-3.5 w-3.5" />
-                          </button>
+                          {isFullAccessPackage ? (
+                            <button
+                              onClick={() => onNavigate('/practice/ati-rn-comprehensive-predictor')}
+                              className="w-full py-3.5 px-4 rounded-xl bg-[#FFD60A] hover:bg-[#ffe033] text-[#0B0E2A] font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all active:scale-[0.98] ring-2 ring-[#FFD60A]/40"
+                            >
+                              <span>Start Practice (Full Access)</span>
+                              <ArrowRight className="h-4 w-4 stroke-[2.5]" />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleViewPackage(exam.id)}
+                              className="w-full py-3 px-4 rounded-xl bg-[#5D5FEF] hover:bg-[#4D4FD9] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98]"
+                            >
+                              <span>View Package</span>
+                              <ArrowDown className="h-3.5 w-3.5" />
+                            </button>
+                          )}
                         </div>
 
                       </div>
