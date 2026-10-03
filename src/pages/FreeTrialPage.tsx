@@ -322,15 +322,21 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
                         {item.icon}
                       </div>
 
-                      <span className={`text-xs font-mono font-bold px-3 py-1 rounded-full ${
-                        isCompleted
-                          ? 'bg-amber-100 text-amber-800'
-                          : answered > 0
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-slate-100 text-slate-700'
-                      }`}>
-                        {isCompleted ? '10/10 Completed' : answered > 0 ? `${answered}/10 Answered` : '10 Sample Questions'}
-                      </span>
+                      {item.category === 'ATI School Exams' ? (
+                        <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          2,400 Qs · Unlocked
+                        </span>
+                      ) : (
+                        <span className={`text-xs font-mono font-bold px-3 py-1 rounded-full ${
+                          isCompleted
+                            ? 'bg-amber-100 text-amber-800'
+                            : answered > 0
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : 'bg-slate-100 text-slate-700'
+                        }`}>
+                          {isCompleted ? '10/10 Completed' : answered > 0 ? `${answered}/10 Answered` : '10 Sample Questions'}
+                        </span>
+                      )}
                     </div>
 
                     {/* Title & Subtitle */}
@@ -359,26 +365,45 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
                     <div className="space-y-1 pt-2">
                       <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                         <div
-                          className={`h-full transition-all duration-300 ${isCompleted ? 'bg-amber-500' : 'bg-[#5D5FEF]'}`}
-                          style={{ width: `${(answered / 10) * 100}%` }}
+                          className={`h-full transition-all duration-300 ${
+                            item.category === 'ATI School Exams' 
+                              ? 'bg-emerald-500 w-full' 
+                              : isCompleted 
+                              ? 'bg-amber-500' 
+                              : 'bg-[#5D5FEF]'
+                          }`}
+                          style={{ width: item.category === 'ATI School Exams' ? '100%' : `${(answered / 10) * 100}%` }}
                         ></div>
                       </div>
                       <div className="flex justify-between text-[11px] text-slate-500 font-mono">
                         <span>Progress</span>
-                        <span>{answered} of 10 Questions</span>
+                        <span>
+                          {item.category === 'ATI School Exams' 
+                            ? 'Full 2,400 Question Pool Available' 
+                            : `${answered} of 10 Questions`}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Action Button */}
                   <div className="pt-2">
-                    <button
-                      onClick={() => handleSelectCategory(item.category)}
-                      className="w-full py-3.5 px-4 rounded-xl bg-[#5D5FEF] hover:bg-[#4D4FD9] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98]"
-                    >
-                      <span>{isCompleted ? 'Review Completed Set' : answered > 0 ? `Resume (Q${answered + 1} of 10)` : 'Start 10 Free Questions'}</span>
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
+                    {item.category === 'ATI School Exams' ? (
+                      <button
+                        onClick={() => onNavigate('/practice/ati-rn-comprehensive-predictor')}
+                        className="w-full py-3.5 px-4 rounded-xl bg-[#FFD60A] hover:bg-[#ffe033] text-[#0B0E2A] font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all active:scale-[0.98] ring-2 ring-[#FFD60A]/40"
+                      >
+                        <span>Access Full 2,400 Questions →</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleSelectCategory(item.category)}
+                        className="w-full py-3.5 px-4 rounded-xl bg-[#5D5FEF] hover:bg-[#4D4FD9] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98]"
+                      >
+                        <span>{isCompleted ? 'Review Completed Set' : answered > 0 ? `Resume (Q${answered + 1} of 10)` : 'Start 10 Free Questions'}</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    )}
                   </div>
                 </div>
               );
